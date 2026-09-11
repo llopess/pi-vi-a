@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('animais', function (Blueprint $table) {
             $table->id();
             $table->string('nome', 80);
-            $table->enum('especie', ['cato', 'gato']);
+            $table->enum('especie', ['cao', 'gato']);
             $table->enum('porte', ['pequeno', 'medio', 'grande']);
             $table->enum('sexo', ['macho', 'femea']);
             $table->date('data_nascimento_estimada');
