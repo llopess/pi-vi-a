@@ -1,0 +1,469 @@
+/* ============================================================
+   Adopatinhas — módulo público · mobile first (RNF01)
+   Tríade cromática: turquesa #0FE6C2 · roxo #C20FE6 · ouro #E6C20F
+   Tons 500 (vivos) em pequenas doses; 800/900 para texto e botões
+   (contraste AA — RNF13); 100 para fundos.
+   Tipos: Bricolage Grotesque (display) + Public Sans (corpo)
+   ============================================================ */
+
+   :root {
+    /* Tríade — tons vivos (identidade: bordas de chip, ícones, detalhes) */
+    --turquesa-500: #0FE6C2;
+    --roxo-500: #C20FE6;
+    --ouro-500: #E6C20F;
+
+    /* Tons escuros (texto, botões, navbar) */
+    --turquesa-800: #0A8069;
+    --turquesa-900: #075A4B;
+    --roxo-800: #7E0A96;
+    --roxo-900: #5C0670;
+    --ouro-800: #8A750A;
+
+    /* Tons claros (fundos de chip, alertas, áreas) */
+    --turquesa-100: #DFFBF5;
+    --roxo-100: #F6E3FB;
+    --ouro-100: #FBF5D6;
+
+    /* Neutros e erro */
+    --tinta-900: #23271F;
+    --tinta-600: #5A6055;
+    --papel-100: #F7F6F3;
+    --papel-0: #FFFFFF;
+    --borda: #E1DFD8;
+    --erro-600: #B3402A;
+    --erro-100: #F9E5E0;
+
+    --raio: 14px;
+    --raio-chip: 999px;
+    --fonte-display: 'Bricolage Grotesque', system-ui, sans-serif;
+    --fonte-corpo: 'Public Sans', system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: var(--fonte-corpo);
+    color: var(--tinta-900);
+    background: var(--papel-100);
+    line-height: 1.55;
+}
+
+h1, h2, h3 { font-family: var(--fonte-display); line-height: 1.15; }
+a { color: var(--turquesa-800); }
+img { display: block; max-width: 100%; }
+
+/* Foco em roxo: acento raro e de alto contraste (RNF13) */
+:focus-visible { outline: 3px solid var(--roxo-500); outline-offset: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition: none !important; animation: none !important; }
+}
+
+/* ---------- Navbar ---------- */
+.navbar {
+    background: var(--turquesa-900);
+    padding: 0.75rem 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    border-bottom: 3px solid var(--turquesa-500); /* fio vivo da tríade */
+}
+
+.navbar-marca {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    text-decoration: none;
+    color: var(--papel-0);
+}
+
+.navbar-logo { font-size: 1.5rem; }
+
+.navbar-nome {
+    font-family: var(--fonte-display);
+    font-weight: 700;
+    font-size: 1.25rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.navbar-nome-sub {
+    font-family: var(--fonte-corpo);
+    font-weight: 400;
+    font-size: 0.7rem;
+    opacity: 0.85;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+/* ---------- Estruturas gerais ---------- */
+.conteudo { max-width: 1100px; margin: 0 auto; padding: 1rem; min-height: 60vh; }
+
+.catalogo-titulo { font-size: 1.5rem; margin: 0; }
+
+.botao {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font: 600 1rem var(--fonte-corpo);
+    padding: 0.65rem 1.2rem;
+    border-radius: var(--raio);
+    border: 2px solid transparent;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.botao-primario { background: var(--turquesa-800); color: var(--papel-0); }
+.botao-primario:hover { background: var(--turquesa-900); }
+.botao-contorno { background: var(--papel-0); color: var(--turquesa-800); border-color: var(--turquesa-800); }
+.botao-texto { background: none; color: var(--tinta-600); }
+.botao-largo { width: 100%; }
+
+.botao-fechar {
+    background: none;
+    border: none;
+    font-size: 1.75rem;
+    line-height: 1;
+    cursor: pointer;
+    color: var(--tinta-600);
+    padding: 0.25rem 0.5rem;
+}
+
+/* ---------- Barra de filtros + drawer ---------- */
+.filtros-barra {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin: 0.5rem 0 1rem;
+}
+
+.filtros-contador {
+    background: var(--roxo-800);
+    color: var(--papel-0);
+    border-radius: var(--raio-chip);
+    font-size: 0.75rem;
+    padding: 0.05rem 0.5rem;
+}
+
+.drawer-fundo, .sheet-fundo {
+    position: fixed;
+    inset: 0;
+    background: rgba(35, 39, 31, 0.45);
+    z-index: 50;
+}
+
+.drawer-filtros {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: min(320px, 85vw);
+    background: var(--papel-0);
+    z-index: 60;
+    padding: 1rem;
+    overflow-y: auto;
+    transform: translateX(100%);
+    transition: transform 0.25s ease;
+}
+
+.drawer-filtros.aberta { transform: translateX(0); }
+
+.drawer-topo, .sheet-topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+}
+
+.drawer-topo h2, .sheet-topo h2 { margin: 0; font-size: 1.15rem; }
+
+.drawer-acoes {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+    position: sticky;
+    bottom: 0;
+    background: var(--papel-0);
+    padding: 0.75rem 0 0.25rem;
+}
+
+/* ---------- Campos de formulário ---------- */
+.campo { display: flex; flex-direction: column; gap: 0.3rem; margin-bottom: 0.9rem; }
+.campo > span { font-weight: 600; font-size: 0.9rem; }
+
+.campo input, .campo select, .campo textarea {
+    font: 400 1rem var(--fonte-corpo);
+    padding: 0.6rem 0.75rem;
+    border: 1.5px solid var(--borda);
+    border-radius: 10px;
+    background: var(--papel-0);
+    color: var(--tinta-900);
+}
+
+.campo input:focus, .campo select:focus, .campo textarea:focus {
+    border-color: var(--turquesa-800);
+    outline: none;
+}
+
+.campo-erro { color: var(--erro-600); font-weight: 600; }
+
+.campo-linha { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+.campo-linha .campo { margin-bottom: 0.9rem; }
+
+.campo-grupo {
+    border: 1.5px solid var(--borda);
+    border-radius: var(--raio);
+    padding: 0.75rem;
+    margin: 0 0 0.9rem;
+}
+
+.campo-grupo legend { font-weight: 600; font-size: 0.9rem; padding: 0 0.35rem; }
+.campo-check { display: flex; align-items: center; gap: 0.5rem; padding: 0.25rem 0; }
+.campo-consentimento { background: var(--turquesa-100); border-radius: 10px; padding: 0.6rem 0.75rem; font-size: 0.9rem; }
+
+/* ---------- Cards do catálogo ---------- */
+.catalogo-grade { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+
+.card-pet {
+    background: var(--papel-0);
+    border: 1.5px solid var(--borda);
+    border-radius: var(--raio);
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.card-pet:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(35, 39, 31, 0.08);
+    border-color: var(--turquesa-500); /* toque vivo no hover */
+}
+
+.card-pet-foto {
+    aspect-ratio: 4 / 3;
+    background: var(--turquesa-100);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-pet-foto img { width: 100%; height: 100%; object-fit: cover; }
+.card-pet-semfoto { font-size: 3.5rem; }
+
+.card-pet-info { padding: 0.75rem 0.9rem 0.9rem; }
+.card-pet-nome { font-family: var(--fonte-display); font-size: 1.1rem; }
+
+/* Assinatura: chips de plaquinha de coleira em ouro (espécie · porte · idade — RF01) */
+.card-pet-chips { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.5rem; }
+
+.chip {
+    background: var(--ouro-100);
+    color: var(--ouro-800);
+    border: 1.5px solid var(--ouro-500);
+    font-weight: 600;
+    font-size: 0.78rem;
+    padding: 0.1rem 0.65rem;
+    border-radius: var(--raio-chip);
+}
+
+.catalogo-vazio {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 2.5rem 1rem;
+    background: var(--papel-0);
+    border: 1.5px dashed var(--borda);
+    border-radius: var(--raio);
+}
+
+.paginacao { margin-top: 1.5rem; display: flex; justify-content: center; }
+
+/* ---------- Página de detalhes ---------- */
+.detalhe-colunas { display: grid; grid-template-columns: 1fr; gap: 1.25rem; }
+
+.detalhe-foto-principal {
+    aspect-ratio: 4 / 3;
+    background: var(--turquesa-100);
+    border-radius: var(--raio);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.detalhe-foto-principal img { width: 100%; height: 100%; object-fit: cover; }
+.detalhe-semfoto { font-size: 5rem; }
+
+.detalhe-miniaturas { display: flex; gap: 0.5rem; margin-top: 0.6rem; }
+
+.miniatura {
+    width: 64px;
+    height: 64px;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 2px solid var(--borda);
+    padding: 0;
+    cursor: pointer;
+    background: none;
+}
+
+.miniatura img { width: 100%; height: 100%; object-fit: cover; }
+
+.detalhe-nome { font-size: 1.9rem; margin: 0 0 0.5rem; }
+.detalhe-chips { margin: 0 0 0.9rem; }
+
+.detalhe-saude { list-style: none; display: flex; flex-wrap: wrap; gap: 0.75rem; padding: 0; margin: 0 0 1rem; }
+.detalhe-saude li { font-weight: 600; font-size: 0.9rem; }
+.detalhe-saude li.sim { color: var(--turquesa-800); }
+.detalhe-saude li.nao { color: var(--tinta-600); }
+
+.detalhe-descricao { margin: 0 0 1rem; }
+.detalhe-data { color: var(--tinta-600); font-size: 0.95rem; margin: 0 0 1.25rem; }
+.detalhe-indisponivel { font-weight: 600; color: var(--ouro-800); }
+.botao-adotar { width: 100%; }
+
+/* ---------- Bottom sheet do formulário (mobile) ---------- */
+.sheet-form {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    max-height: 88vh;
+    overflow-y: auto;
+    background: var(--papel-0);
+    border-radius: 20px 20px 0 0;
+    padding: 0.5rem 1rem 1.25rem;
+    z-index: 60;
+    transform: translateY(105%);
+    transition: transform 0.28s ease;
+    box-shadow: 0 -8px 30px rgba(35, 39, 31, 0.18);
+}
+
+.sheet-form.aberta { transform: translateY(0); }
+
+/* Alça em turquesa vivo: dose pequena da tríade */
+.sheet-alca {
+    width: 44px;
+    height: 5px;
+    border-radius: 999px;
+    background: var(--turquesa-500);
+    margin: 0.4rem auto 0.75rem;
+}
+
+/* ---------- Alertas / status ---------- */
+.alerta { border-radius: var(--raio); padding: 0.9rem 1rem; margin-bottom: 1rem; }
+.alerta-erro { background: var(--erro-100); color: var(--erro-600); font-weight: 600; }
+.alerta-sucesso { background: var(--turquesa-100); color: var(--turquesa-900); }
+.alerta-destaque { display: block; margin-top: 0.5rem; font-weight: 600; }
+
+/* Link único de acompanhamento: destaque em roxo (a credencial da pessoa) */
+.alerta-link {
+    display: block;
+    margin-top: 0.3rem;
+    word-break: break-all;
+    background: var(--roxo-100);
+    color: var(--roxo-900);
+    border: 1.5px solid var(--roxo-500);
+    padding: 0.4rem 0.6rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+}
+
+.acompanhar-saudacao { color: var(--tinta-600); }
+.acompanhar-lista { display: flex; flex-direction: column; gap: 0.75rem; margin-top: 1rem; }
+
+.card-solicitacao {
+    display: flex;
+    gap: 0.9rem;
+    background: var(--papel-0);
+    border: 1.5px solid var(--borda);
+    border-radius: var(--raio);
+    padding: 0.75rem;
+    align-items: center;
+}
+
+.card-solicitacao-foto {
+    width: 72px;
+    height: 72px;
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--turquesa-100);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    flex-shrink: 0;
+}
+
+.card-solicitacao-foto img { width: 100%; height: 100%; object-fit: cover; }
+.card-solicitacao-corpo { display: flex; flex-direction: column; gap: 0.2rem; }
+.card-solicitacao-corpo small { color: var(--tinta-600); }
+
+/* Status pela tríade: aguardando=ouro · andamento=turquesa · finalizada=roxo */
+.status { font-size: 0.8rem; font-weight: 700; width: fit-content; padding: 0.1rem 0.6rem; border-radius: var(--raio-chip); }
+.status-aguardando_resposta { background: var(--ouro-100); color: var(--ouro-800); }
+.status-em_andamento { background: var(--turquesa-100); color: var(--turquesa-800); }
+.status-finalizada { background: var(--roxo-800); color: var(--papel-0); }
+.status-cancelada { background: var(--erro-100); color: var(--erro-600); }
+
+/* ---------- Rodapé ---------- */
+.rodape { background: var(--turquesa-900); color: var(--papel-0); margin-top: 3rem; padding: 2rem 1rem 1rem; border-top: 3px solid var(--turquesa-500); }
+.rodape-colunas { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr; gap: 1.25rem; }
+.rodape h3 { margin: 0 0 0.4rem; font-size: 1rem; }
+.rodape p, .rodape li { font-size: 0.9rem; opacity: 0.9; }
+.rodape ul { list-style: none; padding: 0; margin: 0; }
+.rodape a { color: var(--papel-0); }
+.rodape-legal { max-width: 1100px; margin: 1.5rem auto 0; font-size: 0.78rem; opacity: 0.7; text-align: center; }
+
+/* ============================================================
+   Breakpoint desktop (≥ 900px) — adaptação dos componentes
+   drawer → sidebar fixa · cards → grade · sheet → incorporado
+   ============================================================ */
+@media (min-width: 900px) {
+    .conteudo { padding: 1.5rem 2rem; }
+    .catalogo-titulo { font-size: 2rem; }
+
+    .filtros-barra button[data-abrir-drawer] { display: none; }
+
+    .catalogo-corpo { display: grid; grid-template-columns: 260px 1fr; gap: 1.5rem; align-items: start; }
+
+    .drawer-fundo { display: none !important; }
+
+    .drawer-filtros {
+        position: sticky;
+        top: 5rem;
+        transform: none;
+        width: auto;
+        border: 1.5px solid var(--borda);
+        border-radius: var(--raio);
+        max-height: calc(100vh - 6rem);
+    }
+
+    .drawer-filtros .botao-fechar { display: none; }
+
+    .catalogo-grade { grid-template-columns: repeat(3, 1fr); }
+
+    .detalhe-colunas { grid-template-columns: 1.1fr 1fr; align-items: start; }
+
+    .sheet-fundo { display: none !important; }
+
+    .sheet-form {
+        position: static;
+        transform: none;
+        max-height: none;
+        box-shadow: none;
+        border: 1.5px solid var(--borda);
+        border-radius: var(--raio);
+        margin-top: 2rem;
+        padding: 1.25rem 1.5rem;
+    }
+
+    .sheet-alca, .sheet-form .botao-fechar { display: none; }
+    .botao-adotar { width: auto; }
+
+    .rodape-colunas { grid-template-columns: 2fr 1fr 1fr; }
+}
