@@ -5,6 +5,12 @@
 @section('conteudo')
 <div class="catalogo-pagina">
 
+    <section class="hero">
+        <h1>Tem alguém aqui <span class="marcatexto">esperando</span> por ti</h1>
+        <p>Cães e gatos resgatados, saudáveis e prontos pra recomeçar.</p>
+        <!-- <span class="rabisco">olha quem chegou!</span> -->
+    </section>
+
   {{-- Barra de filtros (mobile: abre a gaveta; desktop: a gaveta vira sidebar fixa) --}}
   <div class="filtros-barra">
     <h1 class="catalogo-titulo">Animais para adoção</h1>
@@ -83,23 +89,20 @@
       {{-- Catálogo (RF01 — UC01) --}}
       <section class="catalogo-grade" aria-label="Animais disponíveis">
           @forelse($animais as $animal)
-              <a href="#" class="card-pet">
-                  <div class="card-pet-foto">
-                      @if($animal->fotoPrincipal)
-                          <img src="{{ asset('storage/' . $animal->fotoPrincipal->caminho_arquivo) }}" alt="Foto de {{ $animal->nome }}">
-                      @else
-                          <span class="card-pet-semfoto" aria-hidden="true">{{ $animal->especie->value === 'gato' ? '🐱' : '🐶' }}</span>
-                      @endif
-                  </div>
-                  <div class="card-pet-info">
-                      <strong class="card-pet-nome">{{ $animal->nome }}</strong>
-                      <div class="card-pet-chips">
-                          <span class="chip">{{ $animal->especie->label() }}</span>
-                          <span class="chip">{{ $animal->porte->label() }}</span>
-                          <span class="chip">{{ $animal->idade_texto }}</span>
-                      </div>
-                  </div>
-              </a>
+            <a href="{{ route('catalogo.show', $animal) }}" class="card-pet">
+                <div class="card-pet-foto">
+                    @if($animal->fotoPrincipal)
+                        <img src="{{ asset('storage/' . $animal->fotoPrincipal->caminho_arquivo) }}" alt="Foto de {{ $animal->nome }}">
+                    @else
+                        <span class="card-pet-semfoto" aria-hidden="true">{{ $animal->especie->value === 'gato' ? '🐱' : '🐶' }}</span>
+                    @endif
+                    <span class="card-pet-selo">{{ $animal->especie->label() }} · {{ $animal->porte->label() }}</span>
+                </div>
+                <div class="card-pet-legenda">
+                    <span class="card-pet-nome">{{ $animal->nome }}</span>
+                    <span class="card-pet-meta">{{ $animal->idade_texto }}</span>
+                </div>
+            </a>
           @empty
               <div class="catalogo-vazio">
                   <p>Nenhum animal corresponde aos filtros escolhidos.</p>

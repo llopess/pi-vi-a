@@ -30,4 +30,10 @@ class CatalogoController extends Controller
 
         return view('catalogo.index', compact('animais', 'filtros', 'totalFiltros'));
     }
+
+    public function show(Animal $animal): View {
+        $animal->load('fotos');
+
+        return view('catalogo.show', compact('animal'));
+    }
 }
