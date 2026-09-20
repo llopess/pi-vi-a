@@ -64,6 +64,79 @@
             @endif
         </div>
     </div>
-
+    <div class="sheet-fundo" data-fechar-sheet hidden></div>
+<section class="sheet-form {{ $errors->any() ? 'aberta' : '' }}" id="sheet-form" aria-label="Formulário de interesse em adoção">
+    <div class="sheet-alca" aria-hidden="true"></div>
+    <div class="sheet-topo">
+        <h2>Quero adotar {{ $animal->nome }}</h2>
+        <button type="button" class="botao-fechar" data-fechar-sheet aria-label="Fechar formulário">×</button>
+    </div>
+ 
+    @if($errors->any())
+        <div class="alerta alerta-erro" role="alert">
+            Verifique os campos destacados e tente novamente.
+        </div>
+    @endif
+ 
+    <form method="POST" action="{{ route('solicitacao.store', $animal) }}" class="interesse-form" id="form-interesse">
+        @csrf
+ 
+        <label class="campo">
+            <span>Nome completo</span>
+            <input type="text" name="nome" value="{{ old('nome') }}" required minlength="3" maxlength="120">
+            @error('nome')<small class="campo-erro">{{ $message }}</small>@enderror
+        </label>
+ 
+        <label class="campo">
+            <span>E-mail</span>
+            <input type="email" name="email" value="{{ old('email') }}" required>
+            @error('email')<small class="campo-erro">{{ $message }}</small>@enderror
+        </label>
+ 
+        <div class="campo-linha">
+            <label class="campo">
+                <span>Telefone</span>
+                <input type="tel" name="telefone" value="{{ old('telefone') }}" required minlength="10" maxlength="20" placeholder="(53) 90000-0000">
+                @error('telefone')<small class="campo-erro">{{ $message }}</small>@enderror
+            </label>
+ 
+            <label class="campo">
+                <span>Cidade</span>
+                <input type="text" name="cidade" value="{{ old('cidade') }}" required maxlength="80">
+                @error('cidade')<small class="campo-erro">{{ $message }}</small>@enderror
+            </label>
+        </div>
+ 
+        <label class="campo">
+            <span>Tipo de moradia</span>
+            <select name="tipo_moradia" required>
+                <option value="" disabled @selected(!old('tipo_moradia'))>Selecione</option>
+                <option value="casa" @selected(old('tipo_moradia') === 'casa')>Casa</option>
+                <option value="apartamento" @selected(old('tipo_moradia') === 'apartamento')>Apartamento</option>
+            </select>
+            @error('tipo_moradia')<small class="campo-erro">{{ $message }}</small>@enderror
+        </label>
+ 
+        <fieldset class="campo-grupo">
+            <legend>Sobre o seu lar</legend>
+            <label class="campo-check"><input type="checkbox" name="possui_outros_animais" value="1" @checked(old('possui_outros_animais'))> Tenho outros animais</label>
+            <label class="campo-check"><input type="checkbox" name="possui_telas_protecao" value="1" @checked(old('possui_telas_protecao'))> Janelas com telas de proteção</label>
+        </fieldset>
+ 
+        <label class="campo">
+            <span>Observações (opcional)</span>
+            <textarea name="observacoes" rows="3" maxlength="1000">{{ old('observacoes') }}</textarea>
+            @error('observacoes')<small class="campo-erro">{{ $message }}</small>@enderror
+        </label>
+ 
+        {{-- Consentimento de armazenamento local (RF06, RNF09) — o dado fica só no navegador --}}
+        <label class="campo-check campo-consentimento">
+            <input type="checkbox" id="salvar-dados">
+            Salvar meus dados neste dispositivo para facilitar solicitações futuras
+        </label>
+ 
+        <button type="submit" class="botao botao-primario botao-largo">Enviar solicitação</button>
+    </form>
+</section>
 </article>
 @endsection
