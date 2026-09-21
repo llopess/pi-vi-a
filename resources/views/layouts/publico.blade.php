@@ -30,9 +30,9 @@
             <div>
                 <h3>Páginas</h3>
                 <ul>
-                    <li><a href="{{ route('catalogo.index') }}">Animais para adoção</a></li>
-                    <li><a href="#">Sobre</a></li>
-                    <li><a href="#">Contato</a></li>
+                  <li><a href="{{ route('catalogo.index') }}">Animais para adoção</a></li>
+                  <li><a href="{{ route('paginas.sobre') }}">Sobre</a></li>
+                  <li><a href="{{ route('paginas.contato') }}">Contato</a></li>
                 </ul>
             </div>
             <div>

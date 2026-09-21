@@ -694,4 +694,12 @@ img { display: block; max-width: 100%; }
     .botao-adotar { width: auto; }
 
     .rodape-colunas { grid-template-columns: 2fr 1fr 1fr; }
+
+    /* ---------- Páginas institucionais ---------- */
+    .pagina-institucional { max-width: 42rem; margin: 0 auto; padding: 0.5rem 0 2rem; }
+    .pagina-institucional h1 { color: var(--azul-900); font-size: 1.8rem; }
+    .pagina-institucional h2 { color: var(--azul-900); font-size: 1.2rem; margin-top: 1.75rem; }
+    .pagina-institucional ol li, .contato-lista li { margin-bottom: 0.4rem; }
+    .contato-lista { list-style: none; padding: 0; }
+    .pagina-nota { margin-top: 2rem; font-size: 0.82rem; color: var(--tinta-500); border-top: 2px dashed var(--borda); padding-top: 0.9rem; }
 }
