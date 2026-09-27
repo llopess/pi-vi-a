@@ -46,7 +46,7 @@ class AnimalController extends Controller
 
     public function edit(Animal $animal): View
     {
-        $animal->load('fotos');
+        $animal->load(['fotos', 'devolucoes']);
 
         return view('admin.animais.edit', compact('animal'));
     }
