@@ -4,6 +4,7 @@ namespace App\Enums;
 
 enum SituacaoAnimal: string
 {
+    case Registrado = 'registrado';
     case Disponivel = 'disponivel';
     case EmProcesso = 'em_processo';
     case Adotado = 'adotado';
@@ -11,6 +12,7 @@ enum SituacaoAnimal: string
     public function label(): string
     {
         return match ($this) {
+            self::Registrado => 'Registrado',
             self::Disponivel => 'Disponível',
             self::EmProcesso => 'Em processo de adoção',
             self::Adotado => 'Adotado',

@@ -143,6 +143,7 @@
 
 /* Selos de situação/status (sem rotação: aqui é trabalho) */
 .selo { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; padding: 0.12rem 0.55rem; border-radius: 4px; white-space: nowrap; }
+.selo-registrado { background: var(--borda); color: var(--tinta-900); }
 .selo-disponivel { background: var(--azul-100); color: var(--azul-700); }
 .selo-em_processo { background: var(--manteiga); color: var(--tinta-900); }
 .selo-adotado { background: var(--azul-900); color: var(--branco); }

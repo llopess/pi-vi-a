@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Admin\AnimalController;
 use App\Http\Controllers\Publico\AcompanhamentoController;
 use App\Http\Controllers\Publico\CatalogoController;
 use App\Http\Controllers\Publico\PaginaController;
@@ -21,7 +22,9 @@ Route::get('/dashboard', function () {
 })->middleware('auth')->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::view('/admin/animais', 'dashboard')->name('admin.animais.index');
+    Route::resource('/admin/animais', AnimalController::class)
+        ->names('admin.animais')
+        ->parameters(['animais' => 'animal']);    
     Route::view('/admin/solicitacoes', 'dashboard')->name('admin.solicitacoes.index');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
