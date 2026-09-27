@@ -1,0 +1,214 @@
+/* ============================================================
+   Adopatinhas — módulo administrativo
+   Mesma paleta do mural, sem os maneirismos: ferramenta de
+   trabalho. Mobile: menu no topo. Desktop (≥900px): sidebar.
+   ============================================================ */
+
+   :root {
+    --azul-900: #1E3250;
+    --azul-700: #2C4A79;
+    --azul-100: #E3EBF6;
+    --coral-500: #F0765B;
+    --coral-700: #B44A31;
+    --coral-100: #FCE8E1;
+    --manteiga: #FFD95C;
+    --creme-50: #FAF6EE;
+    --branco: #FFFFFF;
+    --tinta-900: #2B2A28;
+    --tinta-500: #6E6963;
+    --borda: #EAE3DB;
+    --erro-600: #B3402A;
+    --erro-100: #F9E5E0;
+    --raio: 12px;
+    --fonte: 'Public Sans', system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+.admin-body {
+    margin: 0;
+    font-family: var(--fonte);
+    color: var(--tinta-900);
+    background: var(--creme-50);
+    line-height: 1.5;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;      /* mobile: menu em cima, conteúdo embaixo */
+}
+
+/* ---------- Menu ---------- */
+.admin-menu {
+    background: var(--azul-900);
+    color: var(--branco);
+    padding: 0.75rem 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 1.25rem;
+}
+
+.admin-marca { display: flex; align-items: center; gap: 0.5rem; }
+.admin-logo { font-size: 1.3rem; }
+.admin-nome { font-weight: 800; font-size: 1.05rem; line-height: 1.05; display: flex; flex-direction: column; }
+.admin-nome small { font-weight: 500; font-size: 0.6rem; letter-spacing: 0.06em; text-transform: uppercase; opacity: 0.7; }
+
+.admin-nav { display: flex; gap: 0.25rem; flex-wrap: wrap; }
+
+.admin-nav a {
+    color: var(--branco);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.92rem;
+    padding: 0.4rem 0.85rem;
+    border-radius: 999px;
+    opacity: 0.85;
+}
+
+.admin-nav a:hover { opacity: 1; background: rgba(255, 255, 255, 0.08); }
+.admin-nav a.ativo { opacity: 1; background: var(--coral-500); }
+
+.admin-rodape-menu { display: flex; align-items: center; gap: 1rem; margin-left: auto; }
+.admin-rodape-menu a { color: var(--branco); font-size: 0.82rem; opacity: 0.8; }
+.admin-sair {
+    background: none;
+    border: 1.5px solid rgba(255, 255, 255, 0.4);
+    color: var(--branco);
+    font: 600 0.82rem var(--fonte);
+    padding: 0.3rem 0.8rem;
+    border-radius: 999px;
+    cursor: pointer;
+}
+.admin-sair:hover { border-color: var(--branco); }
+
+/* ---------- Conteúdo ---------- */
+.admin-conteudo { flex: 1; padding: 1.25rem; max-width: 1200px; width: 100%; margin: 0 auto; }
+
+.admin-titulo { font-size: 1.5rem; font-weight: 800; color: var(--azul-900); margin: 0 0 1.25rem; }
+
+.admin-barra {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+    flex-wrap: wrap;
+}
+
+/* Botões: sombra dura herdada do mural */
+.botao {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font: 700 0.9rem var(--fonte);
+    padding: 0.55rem 1.1rem;
+    border-radius: 999px;
+    border: 2px solid var(--azul-900);
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+.botao-primario { background: var(--azul-700); color: var(--branco); box-shadow: 2px 2px 0 var(--azul-900); }
+.botao-primario:hover { transform: translate(1px, 1px); box-shadow: 1px 1px 0 var(--azul-900); }
+.botao-contorno { background: var(--branco); color: var(--azul-900); box-shadow: 2px 2px 0 var(--azul-900); }
+.botao-contorno:hover { transform: translate(1px, 1px); box-shadow: 1px 1px 0 var(--azul-900); }
+.botao-perigo { background: var(--branco); color: var(--erro-600); border-color: var(--erro-600); box-shadow: 2px 2px 0 var(--erro-600); }
+.botao-mini { font-size: 0.8rem; padding: 0.3rem 0.75rem; }
+
+/* ---------- Cartões e tabelas ---------- */
+.admin-cartao {
+    background: var(--branco);
+    border: 1px solid var(--borda);
+    border-radius: var(--raio);
+    box-shadow: 0 2px 8px rgba(43, 42, 40, 0.05);
+    padding: 1rem 1.1rem;
+}
+
+.admin-tabela-wrap { overflow-x: auto; }        /* tabela rola no mobile */
+.admin-tabela { width: 100%; border-collapse: collapse; background: var(--branco); border-radius: var(--raio); overflow: hidden; border: 1px solid var(--borda); }
+.admin-tabela th {
+    text-align: left;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--tinta-500);
+    background: var(--azul-100);
+    padding: 0.6rem 0.8rem;
+}
+.admin-tabela td { padding: 0.65rem 0.8rem; border-top: 1px solid var(--borda); vertical-align: middle; }
+.admin-tabela tr:hover td { background: var(--creme-50); }
+.admin-acoes { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+
+/* Miniatura de foto nas listagens */
+.admin-thumb { width: 44px; height: 44px; border-radius: 8px; object-fit: cover; background: var(--azul-100); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; }
+
+/* Selos de situação/status (sem rotação: aqui é trabalho) */
+.selo { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; padding: 0.12rem 0.55rem; border-radius: 4px; white-space: nowrap; }
+.selo-disponivel { background: var(--azul-100); color: var(--azul-700); }
+.selo-em_processo { background: var(--manteiga); color: var(--tinta-900); }
+.selo-adotado { background: var(--azul-900); color: var(--branco); }
+.selo-aguardando_resposta { background: var(--manteiga); color: var(--tinta-900); }
+.selo-em_andamento { background: var(--azul-100); color: var(--azul-700); }
+.selo-finalizada { background: var(--azul-900); color: var(--branco); }
+.selo-cancelada { background: var(--erro-100); color: var(--erro-600); }
+
+/* ---------- Formulários ---------- */
+.campo { display: flex; flex-direction: column; gap: 0.3rem; margin-bottom: 0.9rem; }
+.campo > span { font-weight: 600; font-size: 0.88rem; }
+.campo input, .campo select, .campo textarea {
+    font: 400 0.95rem var(--fonte);
+    padding: 0.55rem 0.7rem;
+    border: 2px solid var(--tinta-900);
+    border-radius: 8px;
+    background: var(--branco);
+}
+.campo input:focus, .campo select:focus, .campo textarea:focus { border-color: var(--azul-700); outline: none; }
+.campo-erro { color: var(--erro-600); font-weight: 600; font-size: 0.82rem; }
+.campo-linha { display: grid; grid-template-columns: 1fr; gap: 0 0.9rem; }
+.campo-check { display: flex; align-items: center; gap: 0.5rem; padding: 0.2rem 0; }
+.campo-grupo { border: 2px dashed var(--borda); border-radius: var(--raio); padding: 0.75rem; margin: 0 0 0.9rem; }
+.campo-grupo legend { font-weight: 600; font-size: 0.88rem; padding: 0 0.35rem; }
+
+/* ---------- Alertas ---------- */
+.alerta { border-radius: var(--raio); padding: 0.8rem 1rem; margin-bottom: 1rem; }
+.alerta-sucesso { background: var(--azul-100); color: var(--azul-900); border: 2px solid var(--azul-700); }
+.alerta-erro { background: var(--erro-100); color: var(--erro-600); border: 2px solid var(--erro-600); font-weight: 600; }
+
+/* ---------- Dashboard: cartões de contadores ---------- */
+.dash-grade { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.9rem; }
+.dash-numero { font-size: 2.1rem; font-weight: 800; color: var(--azul-900); line-height: 1; }
+.dash-rotulo { font-size: 0.82rem; color: var(--tinta-500); font-weight: 600; margin-top: 0.25rem; }
+.dash-cartao-destaque { border-left: 5px solid var(--coral-500); }
+
+/* ============================================================
+   Desktop (≥900px): sidebar fixa + área de trabalho
+   ============================================================ */
+@media (min-width: 900px) {
+    .admin-body { flex-direction: row; }
+
+    .admin-menu {
+        flex-direction: column;
+        align-items: stretch;
+        width: 230px;
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        padding: 1.25rem 1rem;
+        gap: 1.5rem;
+    }
+
+    .admin-nav { flex-direction: column; }
+    .admin-nav a { border-radius: 8px; }
+
+    .admin-rodape-menu {
+        margin-left: 0;
+        margin-top: auto;              /* empurra pro pé da sidebar */
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.6rem;
+    }
+    .admin-sair { width: 100%; }
+
+    .admin-conteudo { padding: 1.75rem 2rem; }
+    .dash-grade { grid-template-columns: repeat(4, 1fr); }
+    .campo-linha { grid-template-columns: 1fr 1fr; }
+}
